@@ -19,15 +19,21 @@ export function AddTodoItem(props: Props) {
     }
   }
 
-  const handleOnClick = () => {
+  const handleOnSubmit = () => {
     onAddButtonClick(inputText);
     setInputText('');
   }
 
+  const handleOnKeyDown = (event: { key: string; shiftKey: any; }) => {
+    if (event.key === 'Enter' && event.shiftKey) {
+      handleOnSubmit();
+    }
+  }
+
   return (
     <>
-      <input type="text" value={inputText} onChange={toggleButtonState}></input>
-      <button onClick={handleOnClick} disabled={buttonIsDisabled}>追加</button>
+      <input type="text" value={inputText} onChange={toggleButtonState} onKeyDown={handleOnKeyDown}></input>
+      <button onClick={handleOnSubmit} disabled={buttonIsDisabled}>追加</button>
     </>
   )
 }
