@@ -32,11 +32,24 @@ function App() {
     }]);
   }
 
+  const updateTodoList = (todo) => {
+    console.log(`updateTodoList ${todo.id}`)
+
+    const updatedTodoList = todoList.map((t) => {
+      if (t.id === todo.id) {
+        return todo;
+      } else {
+        return t;
+      }
+    })
+    setTodoList(updatedTodoList);
+  }
+
   return (
     <>
       <ul>
         {todoList.map(todo => (
-          <TodoItem todoItem={todo} key={todo.id} />
+          <TodoItem todoItem={todo} key={todo.id} onClickCheckBox={updateTodoList} />
         ))}
       </ul>
       <AddTodoItem onAddButtonClick={addTodoItem} />
