@@ -8,36 +8,19 @@ function App() {
   const id = 'abc';
   const random = Math.floor(Math.random() * 2);
   const flag = !random;
-  const undefinedConst = 'undefined';
-  const nullConst = 'null';
-  const objConst = { hoge: 'hoge', fuga: 1 };
-  const funcConst = () => 'This is the return value';
-  const numbers = [1, 2, 3];
+
+  const todoList = [
+    { id: 1, task: "Learning Browser", completed: true },
+    { id: 2, task: "Learning JavaScript/TypeScript", completed: true },
+    { id: 3, task: "Learning React", completed: false },
+    { id: 4, task: "Learning Next.js", completed: false },
+  ]
 
   return (
     <>
       <ul>
-        <li>
-          <span>undefined</span>:<span>{undefinedConst}</span>
-        </li>
-        <li>
-          <span>null</span>:<span>{nullConst}</span>
-        </li>
-        <li>
-          <span>obj.hoge</span>:<span>{objConst.hoge}</span>
-        </li>
-        <li>
-          <span>obj.fuga</span>:<span>{objConst.fuga}</span>
-        </li>
-        <li>
-          <span>func</span>:<span>{funcConst()}</span>
-        </li>
-      </ul>
-      <ul>
-        {numbers.map((n, i) => (
-          <li key={i}>
-            <span>{n}</span> <span>{n % 2 ? "odd" : "even"}</span>
-          </li>
+        {todoList.map(todo => (
+          <li key={todo.id}><input type="checkbox" checked={todo.completed} readOnly />{todo.task}</li> // Added key prop
         ))}
       </ul>
       <div>
