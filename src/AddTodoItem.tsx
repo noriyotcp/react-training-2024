@@ -8,7 +8,7 @@ export function AddTodoItem(props: Props) {
   const { onAddButtonClick } = props;
   const [buttonIsDisabled, setButtonIsDisabled] = useState(true);
   const [inputText, setInputText] = useState('');
-  
+
   const toggleButtonState = (event: { currentTarget: { value: SetStateAction<string>; }; }) => {
     setInputText(event.currentTarget.value);
 
