@@ -12,7 +12,7 @@ function App() {
   const nullConst = 'null';
   const objConst = { hoge: 'hoge', fuga: 1 };
   const funcConst = () => 'This is the return value';
-  const arrayConst = [1, 2, 3];
+  const numbers = [1, 2, 3];
 
   return (
     <>
@@ -32,9 +32,13 @@ function App() {
         <li>
           <span>func</span>:<span>{funcConst()}</span>
         </li>
-        <li>
-          <span>array</span>:<span>{arrayConst}</span>
-        </li>
+      </ul>
+      <ul>
+        {numbers.map((n, i) => (
+          <li key={i}>
+            <span>{n}</span> <span>{n % 2 ? "odd" : "even"}</span>
+          </li>
+        ))}
       </ul>
       <div>
         <a href="https://vite.dev" target="_blank">
