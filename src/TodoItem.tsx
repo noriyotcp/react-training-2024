@@ -11,8 +11,8 @@ export function TodoItem(props: Props) {
   const { id, task, completed } = props.todoItem;
   const onClickCheckBox = props.onClickCheckBox;
   const onClickRemoveButton = props.onClickRemoveButton;
-  
-  const onDeleteButton: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void = (_event) => {
+
+  const handleOnClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void = (_event) => {
     onClickRemoveButton({
       id,
       task,
@@ -31,7 +31,7 @@ export function TodoItem(props: Props) {
   return (
     <li key={id}>
       <input type="checkbox" checked={completed} onChange={handleOnChange} />{task}
-      <button onClick={onDeleteButton}>削除</button>
+      <button onClick={handleOnClick}>削除</button>
     </li>
   )
 }
