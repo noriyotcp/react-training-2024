@@ -13,7 +13,7 @@ export function TodoItem(props: Props) {
     console.log(`Task is deleted!`);
   }
 
-  const handleOnChange = (event) => {
+  const handleOnChange = (event: { currentTarget: { checked: any; }; }) => {
     onClickCheckBox({
       id,
       task,

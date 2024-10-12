@@ -32,9 +32,7 @@ function App() {
     }]);
   }
 
-  const updateTodoList = (todo) => {
-    console.log(`updateTodoList ${todo.id}`)
-
+  const updateTodoList = (todo: TodoItemType) => {
     const updatedTodoList = todoList.map((t) => {
       if (t.id === todo.id) {
         return todo;
