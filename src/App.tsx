@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import './App.css';
 import { TodoItem } from './TodoItem';
+import { Counter } from './Counter';
 
 export type TodoItemType = {
   id: number;
@@ -9,7 +9,6 @@ export type TodoItemType = {
 };
 
 function App() {
-  const [count, setCount] = useState(0);
   const id = 'abc';
   const random = Math.floor(Math.random() * 2);
   const flag = !random;
@@ -21,12 +20,6 @@ function App() {
     { id: 4, task: "Learning Next.js", completed: false },
   ]
 
-  const increment = () => {
-    setTimeout(() => {
-      setCount(count + 1);
-    }, 2000);
-  }
-
   return (
     <>
       <ul>
@@ -36,10 +29,9 @@ function App() {
       </ul>
       <h1>これがワイの React やで</h1>
       <div className="card">
-        count is {count}
-        <button onClick={increment}>+</button>
-        <button onClick={() => setCount((count) => count - 1)}>-</button>
-        <button onClick={() => setCount(0)}>Reset</button>
+        <Counter />
+        <Counter />
+        <Counter />
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
