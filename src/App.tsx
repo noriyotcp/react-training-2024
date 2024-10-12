@@ -1,6 +1,8 @@
 import './App.css';
 import { TodoItem } from './TodoItem';
 import { Counter } from './Counter';
+import { AddTodoItem } from './AddTodoItem';
+import { useState } from 'react';
 
 export type TodoItemType = {
   id: number;
@@ -13,12 +15,22 @@ function App() {
   const random = Math.floor(Math.random() * 2);
   const flag = !random;
 
-  const todoList = [
+  const initialTodoList = [
     { id: 1, task: "Learning Browser", completed: true },
     { id: 2, task: "Learning JavaScript/TypeScript", completed: true },
     { id: 3, task: "Learning React", completed: false },
     { id: 4, task: "Learning Next.js", completed: false },
   ]
+
+  const [todoList, setTodoList] = useState(initialTodoList);
+
+  const addTodoItem = (text: string) => {
+    setTodoList([...todoList, {
+      id: todoList.length + 1,
+      task: text,
+      completed: false,
+    }]);
+  }
 
   return (
     <>
@@ -27,6 +39,8 @@ function App() {
           <TodoItem todoItem={todo} key={todo.id} />
         ))}
       </ul>
+      <AddTodoItem onAddButtonClick={addTodoItem} />
+
       <h1>これがワイの React やで</h1>
       <div className="card">
         <Counter />
