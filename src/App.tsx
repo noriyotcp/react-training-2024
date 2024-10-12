@@ -32,9 +32,10 @@ function App() {
       </ul>
       <h1>これがワイの React やで</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        count is {count}
+        <button onClick={() => setCount((count) => count + 1)}>+</button>
+        <button onClick={() => setCount((count) => count - 1)}>-</button>
+        <button onClick={() => setCount(0)}>Reset</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
