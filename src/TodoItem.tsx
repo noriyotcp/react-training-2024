@@ -4,13 +4,20 @@ import { type TodoItemType } from "./App";
 type Props = {
   todoItem: TodoItemType;
   onClickCheckBox: (todo: any) => void;
+  onClickRemoveButton: (todo: any) => void;
 };
 
 export function TodoItem(props: Props) {
   const { id, task, completed } = props.todoItem;
   const onClickCheckBox = props.onClickCheckBox;
+  const onClickRemoveButton = props.onClickRemoveButton;
+  
   const onDeleteButton: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void = (_event) => {
-    console.log(`Task is deleted!`);
+    onClickRemoveButton({
+      id,
+      task,
+      completed,
+    })
   }
 
   const handleOnChange = (event: { currentTarget: { checked: any; }; }) => {

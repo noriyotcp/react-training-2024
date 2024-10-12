@@ -43,11 +43,16 @@ function App() {
     setTodoList(updatedTodoList);
   }
 
+  const removeTodoFromList = (todo: TodoItemType) => {
+    const updatedTodoList = todoList.filter((t) => t.id !== todo.id);
+    setTodoList(updatedTodoList);
+  }
+
   return (
     <>
       <ul>
         {todoList.map(todo => (
-          <TodoItem todoItem={todo} key={todo.id} onClickCheckBox={updateTodoList} />
+          <TodoItem todoItem={todo} key={todo.id} onClickCheckBox={updateTodoList} onClickRemoveButton={removeTodoFromList} />
         ))}
       </ul>
       <AddTodoItem onAddButtonClick={addTodoItem} />
