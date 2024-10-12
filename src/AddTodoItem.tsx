@@ -6,16 +6,16 @@ type Props = {
 
 export function AddTodoItem(props: Props) {
   const { onAddButtonClick } = props;
-  const [buttonIsDisabled, setButtonIsDisabled] = useState(true);
+  const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
   const [inputText, setInputText] = useState('');
 
   const toggleButtonState = (event: { currentTarget: { value: SetStateAction<string>; }; }) => {
     setInputText(event.currentTarget.value);
 
     if (event.currentTarget.value === '') {
-      setButtonIsDisabled(true);
+      setIsButtonDisabled(true);
     } else {
-      setButtonIsDisabled(false);
+      setIsButtonDisabled(false);
     }
   }
 
@@ -33,7 +33,7 @@ export function AddTodoItem(props: Props) {
   return (
     <>
       <input type="text" value={inputText} onChange={toggleButtonState} onKeyDown={handleOnKeyDown}></input>
-      <button onClick={handleOnSubmit} disabled={buttonIsDisabled}>追加</button>
+      <button onClick={handleOnSubmit} disabled={IsButtonDisabled}>追加</button>
     </>
   )
 }
