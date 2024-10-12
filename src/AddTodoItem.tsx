@@ -15,10 +15,15 @@ export function AddTodoItem(props) {
     }
   }
 
+  const handleOnClick = () => {
+    onAddButtonClick(inputText);
+    setInputText('');
+  }
+
   return (
     <>
       <input type="text" value={inputText} onChange={toggleButtonState}></input>
-      <button onClick={() => onAddButtonClick(inputText)} disabled={buttonIsDisabled}>追加</button>
+      <button onClick={handleOnClick} disabled={buttonIsDisabled}>追加</button>
     </>
   )
 }
