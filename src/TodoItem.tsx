@@ -1,3 +1,4 @@
+import React from "react";
 import { type TodoItemType } from "./App";
 
 type Props = {
@@ -6,8 +7,14 @@ type Props = {
 
 export function TodoItem(props: Props) {
   const { id, task, completed } = props.todoItem;
+  const onDeleteButton: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void = (_event) => {
+    console.log(`Task is deleted!`);
+  }
 
   return (
-    <li key={id}><input type="checkbox" checked={completed} readOnly />{task}</li> // Added key prop
+    <li key={id}>
+      <input type="checkbox" checked={completed} readOnly />{task}
+      <button onClick={onDeleteButton}>削除</button>
+    </li>
   )
 }
