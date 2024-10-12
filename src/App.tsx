@@ -2,6 +2,13 @@ import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
+import { TodoItem } from './TodoItem';
+
+export type TodoItemType = {
+  id: number;
+  task: string;
+  completed: boolean;
+};
 
 function App() {
   const [count, setCount] = useState(0);
@@ -20,7 +27,7 @@ function App() {
     <>
       <ul>
         {todoList.map(todo => (
-          <li key={todo.id}><input type="checkbox" checked={todo.completed} readOnly />{todo.task}</li> // Added key prop
+          <TodoItem todoItem={todo} key={todo.id} />
         ))}
       </ul>
       <div>
