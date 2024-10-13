@@ -1,4 +1,4 @@
-import { TodoItemType } from "./App";
+import { TodoItemType } from './App';
 
 type Props = {
   todoList: TodoItemType[];
