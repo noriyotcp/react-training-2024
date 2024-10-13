@@ -90,6 +90,12 @@ export function TodoList(props: Props) {
     setInputText('');
   }
 
+  const optionsOnSelect = [
+    { label: '全て', value: 'all' },
+    { label: '完了', value: 'completed' },
+    { label: '未完了', value: 'incompleted' },
+  ];
+
   return (
     <>
       {todos.map((todo) => (
@@ -114,6 +120,16 @@ export function TodoList(props: Props) {
       <button onClick={addNewTodo} disabled={IsButtonDisabled}>
         追加
       </button>
+
+      <div className="card">
+        <select>
+          {optionsOnSelect.map((option) => (
+            <option value={option.value} key={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
     </>
   );
 }
