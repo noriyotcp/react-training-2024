@@ -2,7 +2,7 @@ import './App.css';
 import { TodoItem } from './TodoItem';
 import { Counter } from './Counter';
 import { AddTodoItem } from './AddTodoItem';
-import { useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 
 export type TodoItemType = {
   id: number;
@@ -48,6 +48,15 @@ function App() {
     setTodoList(updatedTodoList);
   }
 
+
+  // select
+  const [selected, setSelected] = useState('');
+  const handleChangeSelect: ChangeEventHandler<HTMLSelectElement> = (event) => setSelected(event.currentTarget.value);
+  const optionsOnSelect = [
+    { label: '全て', value: 'all'},
+    { label: '完了', value: 'completed'},
+    { label: '未完了', value: 'uncompleted'},
+  ]
   return (
     <>
       <ul>
@@ -56,6 +65,14 @@ function App() {
         ))}
       </ul>
       <AddTodoItem onAddButtonClick={addTodoItem} />
+
+      <div className="card">
+        <select value={selected} onChange={handleChangeSelect}>
+          {optionsOnSelect.map(o => (
+            <option value={o.value}>{o.label}</option>
+          ))}
+        </select>
+      </div>
 
       <h1>これがワイの React やで</h1>
       <div className="card">
