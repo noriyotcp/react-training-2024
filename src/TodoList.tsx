@@ -1,3 +1,5 @@
+// TODO: Refactor this component
+
 import { SetStateAction, useReducer, useState } from 'react';
 import { TodoItemType } from './App';
 

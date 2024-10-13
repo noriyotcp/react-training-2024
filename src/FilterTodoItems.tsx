@@ -1,3 +1,5 @@
+// TODO: Refactor this component
+
 type Props = {
   selected: string;
   handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement>
@@ -10,7 +12,7 @@ export function FilterTodoItems(props: Props) {
     { label: '完了', value: 'completed'},
     { label: '未完了', value: 'incompleted'},
   ]
-  
+
   return (
     <select value={selected} onChange={handleChangeSelect}>
       {optionsOnSelect.map(option => (
