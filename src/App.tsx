@@ -26,6 +26,12 @@ function App() {
   const [todoList, setTodoList] = useState(initialTodoList);
 
   const addTodoItem = (text: string) => {
+    setCurrentTodoList([...currentTodoList, {
+      id: todoList.length + 1,
+      task: text,
+      completed: false,
+    }])
+
     setTodoList([...todoList, {
       id: todoList.length + 1,
       task: text,
