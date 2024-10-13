@@ -8,7 +8,7 @@ export function FilterTodoItems(props: Props) {
   const optionsOnSelect = [
     { label: '全て', value: 'all'},
     { label: '完了', value: 'completed'},
-    { label: '未完了', value: 'uncompleted'},
+    { label: '未完了', value: 'incompleted'},
   ]
   
   return (
