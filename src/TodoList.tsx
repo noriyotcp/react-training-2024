@@ -10,11 +10,20 @@ type Add = {
   task: string;
 };
 
-type Action = Add;
+type Remove = {
+  type: 'Remove';
+  id: number;
+};
 
-const add = (task: string): Action => {
+type Action = Add | Remove;
+
+const add = (task: TodoItemType['task']): Action => {
   return { type: 'Add', task };
-}
+};
+
+const remove = (id: TodoItemType['id']): Action => {
+  return { type: 'Remove', id };
+};
 
 const reducer = (todoList: TodoItemType[], action: Action) => {
   switch (action.type) {
@@ -27,6 +36,8 @@ const reducer = (todoList: TodoItemType[], action: Action) => {
           completed: false,
         },
       ];
+    case 'Remove':
+      return todoList.filter((t) => t.id !== action.id);
     default:
       return todoList;
   }
@@ -67,7 +78,7 @@ export function TodoList(props: Props) {
         <li key={todo.id}>
           <input type="checkbox" checked={todo.completed} />
           {todo.task}
-          <button>削除</button>
+          <button onClick={() => dispatch(remove(todo.id))}>削除</button>
         </li>
       ))}
 
