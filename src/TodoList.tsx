@@ -7,15 +7,21 @@ type Props = {
 
 type Add = {
   type: 'Add';
-  task: string;
+  task: TodoItemType['task'];
 };
 
 type Remove = {
   type: 'Remove';
-  id: number;
+  id: TodoItemType['id'];
 };
 
-type Action = Add | Remove;
+type ToggleItemState = {
+  type: 'ToggleItemState';
+  id: TodoItemType['id'];
+  completed: TodoItemType['completed'];
+}
+
+type Action = Add | Remove | ToggleItemState;
 
 const add = (task: TodoItemType['task']): Action => {
   return { type: 'Add', task };
@@ -23,6 +29,10 @@ const add = (task: TodoItemType['task']): Action => {
 
 const remove = (id: TodoItemType['id']): Action => {
   return { type: 'Remove', id };
+};
+
+const toggleItemState = (id: TodoItemType['id'], completed: TodoItemType['completed']): Action => {
+  return { type: 'ToggleItemState', id, completed };
 };
 
 const reducer = (todoList: TodoItemType[], action: Action) => {
@@ -38,6 +48,14 @@ const reducer = (todoList: TodoItemType[], action: Action) => {
       ];
     case 'Remove':
       return todoList.filter((t) => t.id !== action.id);
+    case 'ToggleItemState':
+      return todoList.map((todo) => {
+        if (todo.id === action.id) {
+          return { ...todo, completed: action.completed };
+        } else {
+          return todo;
+        }
+      });
     default:
       return todoList;
   }
@@ -76,18 +94,24 @@ export function TodoList(props: Props) {
     <>
       {todos.map((todo) => (
         <li key={todo.id}>
-          <input type="checkbox" checked={todo.completed} />
+          <input
+            type="checkbox"
+            checked={todo.completed}
+            onChange={() => dispatch(toggleItemState(todo.id, !todo.completed))}
+          />
           {todo.task}
           <button onClick={() => dispatch(remove(todo.id))}>削除</button>
         </li>
       ))}
 
       {/* Add button and input field */}
-      <input type="text" value={inputText} onChange={toggleButtonState} onKeyDown={handleKeyDown}></input>
-      <button
-        onClick={addNewTodo}
-        disabled={IsButtonDisabled}
-      >
+      <input
+        type="text"
+        value={inputText}
+        onChange={toggleButtonState}
+        onKeyDown={handleKeyDown}
+      ></input>
+      <button onClick={addNewTodo} disabled={IsButtonDisabled}>
         追加
       </button>
     </>
