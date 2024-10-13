@@ -3,6 +3,7 @@ import { TodoItem } from './TodoItem';
 import { Counter } from './Counter';
 import { AddTodoItem } from './AddTodoItem';
 import { ChangeEventHandler, useState } from 'react';
+import { FilterTodoItems } from './FilterTodoItems';
 
 export type TodoItemType = {
   id: number;
@@ -68,11 +69,6 @@ function App() {
       setCurrentTodoList(updatedTodoList);
     }
   }
-  const optionsOnSelect = [
-    { label: '全て', value: 'all'},
-    { label: '完了', value: 'completed'},
-    { label: '未完了', value: 'uncompleted'},
-  ]
   return (
     <>
       <ul>
@@ -83,11 +79,7 @@ function App() {
       <AddTodoItem onAddButtonClick={addTodoItem} />
 
       <div className="card">
-        <select value={selected} onChange={handleChangeSelect}>
-          {optionsOnSelect.map(option => (
-            <option value={option.value} key={option.value}>{option.label}</option>
-          ))}
-        </select>
+        <FilterTodoItems selected={selected} handleChangeSelect={handleChangeSelect} />
       </div>
 
       <h1>これがワイの React やで</h1>
