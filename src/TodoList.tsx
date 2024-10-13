@@ -3,7 +3,7 @@ import { TodoItemType } from './App';
 
 type Props = {
   todoList: TodoItemType[];
-}
+};
 
 type Add = {
   type: 'Add';
@@ -19,9 +19,14 @@ type ToggleItemState = {
   type: 'ToggleItemState';
   id: TodoItemType['id'];
   completed: TodoItemType['completed'];
-}
+};
 
-type Action = Add | Remove | ToggleItemState;
+type FilterByStatus = {
+  type: 'FilterByStatus';
+  status: 'all' | 'completed' | 'incompleted';
+};
+
+type Action = Add | Remove | ToggleItemState | FilterByStatus;
 
 const add = (task: TodoItemType['task']): Action => {
   return { type: 'Add', task };
@@ -31,39 +36,103 @@ const remove = (id: TodoItemType['id']): Action => {
   return { type: 'Remove', id };
 };
 
-const toggleItemState = (id: TodoItemType['id'], completed: TodoItemType['completed']): Action => {
+const toggleItemState = (
+  id: TodoItemType['id'],
+  completed: TodoItemType['completed']
+): Action => {
   return { type: 'ToggleItemState', id, completed };
 };
 
-const reducer = (todoList: TodoItemType[], action: Action) => {
+const filterByStatus = (
+  status: 'all' | 'completed' | 'incompleted'
+): Action => {
+  return { type: 'FilterByStatus', status };
+};
+
+const reducer = (
+  state: { todoList: TodoItemType[]; initialTodoList: TodoItemType[] },
+  action: Action
+) => {
   switch (action.type) {
     case 'Add':
-      return [
-        ...todoList,
-        {
-          id: todoList.length + 1,
-          task: action.task,
-          completed: false,
-        },
-      ];
+      return {
+        ...state,
+        todoList: [
+          ...state.todoList,
+          {
+            id: state.todoList.length + 1,
+            task: action.task,
+            completed: false,
+          },
+        ],
+        initialTodoList: [
+          ...state.initialTodoList,
+          {
+            id: state.initialTodoList.length + 1,
+            task: action.task,
+            completed: false,
+          },
+        ],
+      };
     case 'Remove':
-      return todoList.filter((t) => t.id !== action.id);
+      return {
+        ...state,
+        todoList: state.todoList.filter((t) => t.id !== action.id),
+        initialTodoList: state.initialTodoList.filter(
+          (t) => t.id !== action.id
+        ),
+      };
     case 'ToggleItemState':
-      return todoList.map((todo) => {
-        if (todo.id === action.id) {
-          return { ...todo, completed: action.completed };
-        } else {
-          return todo;
-        }
-      });
+      return {
+        ...state,
+        todoList: state.todoList.map((todo) => {
+          if (todo.id === action.id) {
+            return { ...todo, completed: action.completed };
+          } else {
+            return todo;
+          }
+        }),
+        initialTodoList: state.initialTodoList.map((todo) => {
+          if (todo.id === action.id) {
+            return { ...todo, completed: action.completed };
+          } else {
+            return todo;
+          }
+        }),
+      };
+    case 'FilterByStatus':
+      switch (action.status) {
+        case 'completed':
+          return {
+            ...state,
+            todoList: state.initialTodoList.filter((t) => t.completed === true),
+          };
+        case 'incompleted':
+          return {
+            ...state,
+            todoList: state.initialTodoList.filter(
+              (t) => t.completed === false
+            ),
+          };
+        case 'all':
+          return {
+            ...state,
+            todoList: state.initialTodoList,
+          };
+        default:
+          return state;
+      }
     default:
-      return todoList;
+      return state;
   }
-}
+};
 
 export function TodoList(props: Props) {
   const { todoList } = props;
-  const [todos, dispatch] = useReducer<React.Reducer<TodoItemType[], Action>>(reducer, todoList);
+  const [state, dispatch] = useReducer(reducer, {
+    todoList,
+    initialTodoList: todoList,
+  });
   const [inputText, setInputText] = useState('');
   const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -88,7 +157,7 @@ export function TodoList(props: Props) {
   const addNewTodo = () => {
     dispatch(add(inputText));
     setInputText('');
-  }
+  };
 
   const optionsOnSelect = [
     { label: '全て', value: 'all' },
@@ -96,9 +165,17 @@ export function TodoList(props: Props) {
     { label: '未完了', value: 'incompleted' },
   ];
 
+  const handleChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(
+      filterByStatus(
+        event.currentTarget.value as 'all' | 'completed' | 'incompleted'
+      )
+    );
+  };
+
   return (
     <>
-      {todos.map((todo) => (
+      {state.todoList.map((todo) => (
         <li key={todo.id}>
           <input
             type="checkbox"
@@ -122,7 +199,7 @@ export function TodoList(props: Props) {
       </button>
 
       <div className="card">
-        <select>
+        <select onChange={handleChangeSelect}>
           {optionsOnSelect.map((option) => (
             <option value={option.value} key={option.value}>
               {option.label}
