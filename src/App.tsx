@@ -48,10 +48,26 @@ function App() {
     setTodoList(updatedTodoList);
   }
 
-
   // select
   const [selected, setSelected] = useState('');
-  const handleChangeSelect: ChangeEventHandler<HTMLSelectElement> = (event) => setSelected(event.currentTarget.value);
+  const [currentTodoList, setCurrentTodoList] = useState(todoList);
+
+  const handleChangeSelect: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    console.log(event.currentTarget.value);
+    setSelected(event.currentTarget.value);
+    let updatedTodoList;
+
+    if (event.currentTarget.value === 'completed') {
+      updatedTodoList = todoList.filter((t) => t.completed === true);
+      setCurrentTodoList(updatedTodoList);
+    } else if (event.currentTarget.value === 'uncompleted') {
+      updatedTodoList = todoList.filter((t) => t.completed === false);
+      setCurrentTodoList(updatedTodoList);
+    } else {
+      updatedTodoList = todoList.filter((t) => t.completed === true || t.completed === false);
+      setCurrentTodoList(updatedTodoList);
+    }
+  }
   const optionsOnSelect = [
     { label: '全て', value: 'all'},
     { label: '完了', value: 'completed'},
@@ -60,7 +76,7 @@ function App() {
   return (
     <>
       <ul>
-        {todoList.map(todo => (
+        {currentTodoList.map(todo => (
           <TodoItem todoItem={todo} key={todo.id} onClickCheckBox={updateTodoList} onClickRemoveButton={removeTodoFromList} />
         ))}
       </ul>
@@ -68,8 +84,8 @@ function App() {
 
       <div className="card">
         <select value={selected} onChange={handleChangeSelect}>
-          {optionsOnSelect.map(o => (
-            <option value={o.value}>{o.label}</option>
+          {optionsOnSelect.map(option => (
+            <option value={option.value} key={option.value}>{option.label}</option>
           ))}
         </select>
       </div>
