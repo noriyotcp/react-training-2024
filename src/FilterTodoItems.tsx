@@ -1,4 +1,9 @@
-export function FilterTodoItems(props) {
+type Props = {
+  selected: string;
+  handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement>
+}
+
+export function FilterTodoItems(props: Props) {
   const { selected, handleChangeSelect } = props;
   const optionsOnSelect = [
     { label: '全て', value: 'all'},

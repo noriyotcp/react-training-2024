@@ -53,7 +53,7 @@ function App() {
   const [selected, setSelected] = useState('');
   const [currentTodoList, setCurrentTodoList] = useState(todoList);
 
-  const handleChangeSelect: ChangeEventHandler<HTMLSelectElement> = (event) => {
+  const filterCurrentTodoList: ChangeEventHandler<HTMLSelectElement> = (event) => {
     console.log(event.currentTarget.value);
     setSelected(event.currentTarget.value);
     let updatedTodoList;
@@ -79,7 +79,7 @@ function App() {
       <AddTodoItem onAddButtonClick={addTodoItem} />
 
       <div className="card">
-        <FilterTodoItems selected={selected} handleChangeSelect={handleChangeSelect} />
+        <FilterTodoItems selected={selected} handleChangeSelect={filterCurrentTodoList} />
       </div>
 
       <h1>これがワイの React やで</h1>
