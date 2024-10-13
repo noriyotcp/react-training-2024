@@ -4,6 +4,7 @@ import { Counter } from './Counter';
 import { AddTodoItem } from './AddTodoItem';
 import { ChangeEventHandler, useState } from 'react';
 import { FilterTodoItems } from './FilterTodoItems';
+import { TodoList } from './TodoList';
 
 export type TodoItemType = {
   id: number;
@@ -17,10 +18,10 @@ function App() {
   const flag = !random;
 
   const initialTodoList = [
-    { id: 1, task: "Learning Browser", completed: true },
-    { id: 2, task: "Learning JavaScript/TypeScript", completed: true },
-    { id: 3, task: "Learning React", completed: false },
-    { id: 4, task: "Learning Next.js", completed: false },
+    { id: 1, task: 'Learning Browser', completed: true },
+    { id: 2, task: 'Learning JavaScript/TypeScript', completed: true },
+    { id: 3, task: 'Learning React', completed: false },
+    { id: 4, task: 'Learning Next.js', completed: false },
   ]
 
   const [todoList, setTodoList] = useState(initialTodoList);
@@ -67,7 +68,7 @@ function App() {
     if (event.currentTarget.value === 'completed') {
       updatedTodoList = todoList.filter((t) => t.completed === true);
       setCurrentTodoList(updatedTodoList);
-    } else if (event.currentTarget.value === 'uncompleted') {
+    } else if (event.currentTarget.value === 'incompleted') {
       updatedTodoList = todoList.filter((t) => t.completed === false);
       setCurrentTodoList(updatedTodoList);
     } else {
@@ -87,6 +88,10 @@ function App() {
       <div className="card">
         <FilterTodoItems selected={selected} handleChangeSelect={filterCurrentTodoList} />
       </div>
+
+      <ul>
+        <TodoList todoList={todoList} />
+      </ul>
 
       <h1>これがワイの React やで</h1>
       <div className="card">

@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useState } from 'react';
 
 type Props = {
   onAddButtonClick: (text: string) => void;

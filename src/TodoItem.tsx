@@ -1,5 +1,5 @@
-import React from "react";
-import { type TodoItemType } from "./App";
+import React from 'react';
+import { type TodoItemType } from './App';
 
 type Props = {
   todoItem: TodoItemType;
