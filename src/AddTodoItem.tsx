@@ -29,6 +29,7 @@ export function AddTodoItem(props: Props) {
       addNewTodo(inputRef.current.value);
       inputRef.current.value = '';
       inputRef.current.focus();
+      setIsButtonDisabled(true);
     }
   };
 
