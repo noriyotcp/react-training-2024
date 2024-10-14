@@ -25,7 +25,10 @@ export function Clock() {
   );
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    setSelected(event.currentTarget.value as 'h12' | 'h24');
+    const value = event.currentTarget.value;
+    if (value === 'h12' || value === 'h24') {
+      setSelected(value);
+    }
   };
 
   useEffect(() => {
