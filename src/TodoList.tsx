@@ -1,6 +1,6 @@
 // TODO: Refactor this component
 
-import { SetStateAction, useReducer, useState } from 'react';
+import { SetStateAction, useReducer, useRef, useState } from 'react';
 import { TodoItemType } from './App';
 
 type Props = {
@@ -138,6 +138,8 @@ export function TodoList(props: Props) {
   const [inputText, setInputText] = useState('');
   const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const toggleButtonState = (event: {
     currentTarget: { value: SetStateAction<string> };
   }) => {
@@ -159,6 +161,7 @@ export function TodoList(props: Props) {
   const addNewTodo = () => {
     dispatch(add(inputText));
     setInputText('');
+    inputRef.current?.focus();
   };
 
   const optionsOnSelect = [
@@ -193,6 +196,7 @@ export function TodoList(props: Props) {
       <input
         type="text"
         value={inputText}
+        ref={inputRef}
         onChange={toggleButtonState}
         onKeyDown={handleKeyDown}
       ></input>
