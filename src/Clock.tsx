@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
 export function Clock() {
-  const [date, setDate] = useState(new Date().toLocaleTimeString());
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
 
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
     setTimeout(() => {
-      setDate(new Date().toLocaleTimeString());
+      setTime(new Date().toLocaleTimeString());
     }, 1000, signal);
 
     return () => controller.abort();
@@ -16,7 +16,7 @@ export function Clock() {
   return (
     <div>
       <h1>Current Time</h1>
-      <p>{date}</p>
+      <p>{time}</p>
     </div>
   )
 }
