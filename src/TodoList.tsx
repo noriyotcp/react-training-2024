@@ -5,6 +5,7 @@ import { TodoItemType } from './App';
 import { TodoItemTaskInput } from './TodoItemTaskInput';
 import {
   reducer,
+  add,
   remove,
   toggleItemState,
   filterByStatus,
@@ -35,6 +36,10 @@ export function TodoList(props: Props) {
     );
   };
 
+  const addNewTodo = (inputText: string) => {
+    dispatch(add(inputText));
+  };
+
   return (
     <>
       {state.todoList.map((todo) => (
@@ -50,7 +55,7 @@ export function TodoList(props: Props) {
       ))}
 
       {/* Add button and input field */}
-      <TodoItemTaskInput />
+      <TodoItemTaskInput addNewTodo={addNewTodo} />
 
       <div className="card">
         <select onChange={handleChangeSelect}>

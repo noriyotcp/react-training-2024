@@ -1,12 +1,14 @@
 // TODO: Refactor this component
 
 import { SetStateAction, useRef, useState } from 'react';
+import { TodoItemType } from './App';
 
 type Props = {
-  // onAddButtonClick: () => void;
+  addNewTodo: (inputText: TodoItemType['task']) => void;
 };
 
 export function TodoItemTaskInput(props: Props) {
+  const { addNewTodo } = props;
   const [inputText, setInputText] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -25,21 +27,15 @@ export function TodoItemTaskInput(props: Props) {
   };
 
   const handleOnSubmit = () => {
-    onAddButtonClick();
+    addNewTodo(inputText);
     setInputText('');
+    inputRef.current?.focus();
   };
 
   const handleKeyDown = (event: { key: string; shiftKey: any }) => {
     if (event.key === 'Enter' && event.shiftKey) {
       handleOnSubmit();
     }
-  };
-
-  const addNewTodo = () => {
-    // dispatch(add(inputText));
-    setInputText('placeholder');
-    console.log(inputRef.current);
-    inputRef.current?.focus();
   };
 
   return (
@@ -51,7 +47,7 @@ export function TodoItemTaskInput(props: Props) {
         onChange={toggleButtonState}
         onKeyDown={handleKeyDown}
       ></input>
-      <button onClick={addNewTodo} disabled={isButtonDisabled}>
+      <button onClick={handleOnSubmit} disabled={isButtonDisabled}>
         追加
       </button>
     </>
