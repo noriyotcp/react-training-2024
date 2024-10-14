@@ -11,8 +11,11 @@ const hourCycles: HourCycle[] = [
 
 export function Clock() {
   const [selected, setSelected] = useState('h12');
+
   const isHour12 = () => selected === 'h12';
-  const [time, setTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: isHour12() }));
+  const formatOptions = { hour: '2-digit' as const, minute: '2-digit' as const, second: '2-digit' as const, hour12: isHour12() };
+
+  const [time, setTime] = useState(new Date().toLocaleTimeString([], formatOptions));
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setSelected(event.currentTarget.value);
@@ -23,12 +26,7 @@ export function Clock() {
     const signal = controller.signal;
     setTimeout(() => {
       setTime(
-        new Date().toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: isHour12(),
-        })
+        new Date().toLocaleTimeString([], formatOptions)
       );
     }, 1000, signal);
 
