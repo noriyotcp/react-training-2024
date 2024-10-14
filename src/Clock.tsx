@@ -4,11 +4,13 @@ export function Clock() {
   const [date, setDate] = useState(new Date().toLocaleTimeString());
 
   useEffect(() => {
-    const timerId = setTimeout(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    setTimeout(() => {
       setDate(new Date().toLocaleTimeString());
-    }, 1000);
+    }, 1000, signal);
 
-    return () => clearTimeout(timerId);
+    return () => controller.abort();
   });
 
   return (
