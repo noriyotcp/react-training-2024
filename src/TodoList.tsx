@@ -2,6 +2,7 @@
 
 import { SetStateAction, useReducer, useRef, useState } from 'react';
 import { TodoItemType } from './App';
+import { TodoItemTaskInput } from './TodoItemTaskInput';
 
 type Props = {
   todoList: TodoItemType[];
@@ -135,34 +136,6 @@ export function TodoList(props: Props) {
     todoList,
     initialTodoList: todoList,
   });
-  const [inputText, setInputText] = useState('');
-  const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
-
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const toggleButtonState = (event: {
-    currentTarget: { value: SetStateAction<string> };
-  }) => {
-    setInputText(event.currentTarget.value);
-
-    if (event.currentTarget.value === '') {
-      setIsButtonDisabled(true);
-    } else {
-      setIsButtonDisabled(false);
-    }
-  };
-
-  const handleKeyDown = (event: { key: string; shiftKey: unknown }) => {
-    if (event.key === 'Enter' && event.shiftKey) {
-      addNewTodo();
-    }
-  };
-
-  const addNewTodo = () => {
-    dispatch(add(inputText));
-    setInputText('');
-    inputRef.current?.focus();
-  };
 
   const optionsOnSelect = [
     { label: '全て', value: 'all' },
@@ -193,16 +166,7 @@ export function TodoList(props: Props) {
       ))}
 
       {/* Add button and input field */}
-      <input
-        type="text"
-        value={inputText}
-        ref={inputRef}
-        onChange={toggleButtonState}
-        onKeyDown={handleKeyDown}
-      ></input>
-      <button onClick={addNewTodo} disabled={IsButtonDisabled}>
-        追加
-      </button>
+      <TodoItemTaskInput />
 
       <div className="card">
         <select onChange={handleChangeSelect}>
