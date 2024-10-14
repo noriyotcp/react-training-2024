@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 
-const hourCycles = [
+type HourCycle =
+  | { label: 'h12'; value: 'h12' }
+  | { label: 'h24'; value: 'h24' };
+
+const hourCycles: HourCycle[] = [
   { label: 'h12', value: 'h12' },
   { label: 'h24', value: 'h24' },
 ];
