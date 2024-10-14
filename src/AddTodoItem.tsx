@@ -1,34 +1,32 @@
-// TODO: Refactor this component
-
-import { SetStateAction, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { TodoItemType } from './App';
 
 type Props = {
-  onAddButtonClick: (text: string) => void;
+  addNewTodo: (inputText: TodoItemType['task']) => void;
 };
 
 export function AddTodoItem(props: Props) {
-  const { onAddButtonClick } = props;
-  const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
+  const { addNewTodo } = props;
   const [inputText, setInputText] = useState('');
 
-  const toggleButtonState = (event: {
-    currentTarget: { value: SetStateAction<string> };
-  }) => {
-    setInputText(event.currentTarget.value);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-    if (event.currentTarget.value === '') {
-      setIsButtonDisabled(true);
-    } else {
-      setIsButtonDisabled(false);
+  useEffect(() => {
+    if (buttonRef.current !== null) {
+      buttonRef.current.disabled = inputText === '';
+    }
+  }, [inputText]);
+
+  const handleOnSubmit = () => {
+    if (inputRef.current !== null) {
+      addNewTodo(inputRef.current.value);
+      setInputText('');
+      inputRef.current.focus();
     }
   };
 
-  const handleOnSubmit = () => {
-    onAddButtonClick(inputText);
-    setInputText('');
-  };
-
-  const handleOnKeyDown = (event: { key: string; shiftKey: any }) => {
+  const handleKeyDown = (event: { key: string; shiftKey: unknown }) => {
     if (event.key === 'Enter' && event.shiftKey) {
       handleOnSubmit();
     }
@@ -39,10 +37,11 @@ export function AddTodoItem(props: Props) {
       <input
         type="text"
         value={inputText}
-        onChange={toggleButtonState}
-        onKeyDown={handleOnKeyDown}
+        ref={inputRef}
+        onChange={() => setInputText(inputRef.current?.value ?? '')}
+        onKeyDown={handleKeyDown}
       ></input>
-      <button onClick={handleOnSubmit} disabled={IsButtonDisabled}>
+      <button ref={buttonRef} onClick={handleOnSubmit}>
         追加
       </button>
     </>
