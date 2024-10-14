@@ -10,6 +10,7 @@ const hourCycles: HourCycle[] = [
 ];
 
 export function Clock() {
+  console.log('Clock rendered');
   const [selected, setSelected] = useState<'h12' | 'h24'>('h12');
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -18,7 +19,7 @@ export function Clock() {
     minute: '2-digit' as const,
     second: '2-digit' as const,
     hour12: selected === 'h12',
-  }
+  };
 
   const [time, setTime] = useState(
     new Date().toLocaleTimeString([], formatOptions)
@@ -32,17 +33,15 @@ export function Clock() {
   };
 
   useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    setTimeout(
-      () => {
-        setTime(new Date().toLocaleTimeString([], formatOptions));
-      },
-      1000,
-      signal
-    );
+    console.log('Clock effect');
+    const intervalId = setInterval(() => {
+      setTime(new Date().toLocaleTimeString([], formatOptions));
+    }, 1000);
 
-    return () => controller.abort();
+    return () => {
+      console.log('Clock cleanup');
+      clearInterval(intervalId);
+    }
   }, [formatOptions]);
 
   return (
