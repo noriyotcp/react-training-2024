@@ -2,6 +2,7 @@ import './App.css';
 import { Counter } from './Counter';
 import { useState } from 'react';
 import { TodoList } from './TodoList';
+import { Clock } from './Clock';
 
 export type TodoItemType = {
   id: number;
@@ -25,6 +26,7 @@ function App() {
 
   return (
     <>
+      <Clock />
       <ul>
         <TodoList todoList={todoList} />
       </ul>
