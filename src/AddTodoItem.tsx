@@ -1,34 +1,38 @@
-// TODO: Refactor this component
-
-import { SetStateAction, useState } from 'react';
+import { useRef, useState } from 'react';
+import { TodoItemType } from './App';
 
 type Props = {
-  onAddButtonClick: (text: string) => void;
+  addNewTodo: (inputText: TodoItemType['task']) => void;
 };
 
 export function AddTodoItem(props: Props) {
-  const { onAddButtonClick } = props;
-  const [IsButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [inputText, setInputText] = useState('');
+  const { addNewTodo } = props;
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  const toggleButtonState = (event: {
-    currentTarget: { value: SetStateAction<string> };
-  }) => {
-    setInputText(event.currentTarget.value);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-    if (event.currentTarget.value === '') {
+  const toggleButtonState = () => {
+    if (inputRef.current === null) {
       setIsButtonDisabled(true);
     } else {
-      setIsButtonDisabled(false);
+      console.log(inputRef.current.value);
+      if (inputRef.current.value === '') {
+        setIsButtonDisabled(true);
+      } else {
+        setIsButtonDisabled(false);
+      }
     }
   };
 
   const handleOnSubmit = () => {
-    onAddButtonClick(inputText);
-    setInputText('');
+    if (inputRef.current !== null) {
+      addNewTodo(inputRef.current.value);
+      inputRef.current.value = '';
+      inputRef.current.focus();
+    }
   };
 
-  const handleOnKeyDown = (event: { key: string; shiftKey: any }) => {
+  const handleKeyDown = (event: { key: string; shiftKey: unknown }) => {
     if (event.key === 'Enter' && event.shiftKey) {
       handleOnSubmit();
     }
@@ -38,11 +42,11 @@ export function AddTodoItem(props: Props) {
     <>
       <input
         type="text"
-        value={inputText}
+        ref={inputRef}
         onChange={toggleButtonState}
-        onKeyDown={handleOnKeyDown}
+        onKeyDown={handleKeyDown}
       ></input>
-      <button onClick={handleOnSubmit} disabled={IsButtonDisabled}>
+      <button onClick={handleOnSubmit} disabled={isButtonDisabled}>
         追加
       </button>
     </>

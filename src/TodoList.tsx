@@ -2,7 +2,6 @@
 
 import { useReducer } from 'react';
 import { TodoItemType } from './App';
-import { TodoItemTaskInput } from './TodoItemTaskInput';
 import {
   reducer as todoReducer,
   add,
@@ -10,6 +9,7 @@ import {
   toggleItemState,
   filterByStatus,
 } from './todoReducer';
+import { AddTodoItem } from './AddTodoItem';
 
 type Props = {
   todoList: TodoItemType[];
@@ -55,7 +55,7 @@ export function TodoList(props: Props) {
       ))}
 
       {/* Add button and input field */}
-      <TodoItemTaskInput addNewTodo={addNewTodo} />
+      <AddTodoItem addNewTodo={addNewTodo} />
 
       <div className="card">
         <select onChange={handleChangeSelect}>
