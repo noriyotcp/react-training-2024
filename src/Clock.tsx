@@ -18,7 +18,7 @@ export function Clock() {
     minute: '2-digit' as const,
     second: '2-digit' as const,
     hour12: selected === 'h12',
-  }
+  };
 
   const [time, setTime] = useState(
     new Date().toLocaleTimeString([], formatOptions)
@@ -32,17 +32,11 @@ export function Clock() {
   };
 
   useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    setTimeout(
-      () => {
-        setTime(new Date().toLocaleTimeString([], formatOptions));
-      },
-      1000,
-      signal
-    );
+    const intervalId = setInterval(() => {
+      setTime(new Date().toLocaleTimeString([], formatOptions));
+    }, 1000);
 
-    return () => controller.abort();
+    return () => clearInterval(intervalId);
   }, [formatOptions]);
 
   return (
