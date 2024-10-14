@@ -4,7 +4,7 @@ import { useReducer } from 'react';
 import { TodoItemType } from './App';
 import { TodoItemTaskInput } from './TodoItemTaskInput';
 import {
-  reducer,
+  reducer as todoReducer,
   add,
   remove,
   toggleItemState,
@@ -17,7 +17,7 @@ type Props = {
 
 export function TodoList(props: Props) {
   const { todoList } = props;
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, dispatch] = useReducer(todoReducer, {
     todoList,
     initialTodoList: todoList,
   });

@@ -1,5 +1,3 @@
-// TODO: Refactor this component
-
 import { useRef, useState } from 'react';
 import { TodoItemType } from './App';
 
@@ -13,7 +11,7 @@ export function TodoItemTaskInput(props: Props) {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const toggleButtonStateByRef = () => {
+  const toggleButtonState = () => {
     if (inputRef.current === null) {
       setIsButtonDisabled(true);
     } else {
@@ -34,7 +32,7 @@ export function TodoItemTaskInput(props: Props) {
     }
   };
 
-  const handleKeyDown = (event: { key: string; shiftKey: any }) => {
+  const handleKeyDown = (event: { key: string; shiftKey: unknown }) => {
     if (event.key === 'Enter' && event.shiftKey) {
       handleOnSubmit();
     }
@@ -45,7 +43,7 @@ export function TodoItemTaskInput(props: Props) {
       <input
         type="text"
         ref={inputRef}
-        onChange={toggleButtonStateByRef}
+        onChange={toggleButtonState}
         onKeyDown={handleKeyDown}
       ></input>
       <button onClick={handleOnSubmit} disabled={isButtonDisabled}>
