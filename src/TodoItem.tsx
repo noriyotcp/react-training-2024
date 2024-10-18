@@ -1,42 +1,26 @@
-// TODO: Refactor this component
-
 import React from 'react';
-import { type TodoItemType } from './App';
+import { TodoItemType } from './App';
+import { remove, toggleItemState, Action } from './todoReducer';
 
 type Props = {
-  todoItem: TodoItemType;
-  onClickCheckBox: (todo: any) => void;
-  onClickRemoveButton: (todo: any) => void;
+  todo: TodoItemType;
+  dispatch: React.Dispatch<Action>;
 };
 
-export function TodoItem(props: Props) {
-  const { id, task, completed } = props.todoItem;
-  const onClickCheckBox = props.onClickCheckBox;
-  const onClickRemoveButton = props.onClickRemoveButton;
-
-  const handleOnClick: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => void = (_event) => {
-    onClickRemoveButton({
-      id,
-      task,
-      completed,
-    });
+export function TodoItem({ todo, dispatch }: Props) {
+  const handleToggle = () => {
+    dispatch(toggleItemState(todo.id, !todo.completed));
   };
 
-  const handleOnChange = (event: { currentTarget: { checked: any } }) => {
-    onClickCheckBox({
-      id,
-      task,
-      completed: event.currentTarget.checked,
-    });
+  const handleRemove = () => {
+    dispatch(remove(todo.id));
   };
 
   return (
-    <li key={id}>
-      <input type="checkbox" checked={completed} onChange={handleOnChange} />
-      {task}
-      <button onClick={handleOnClick}>削除</button>
+    <li key={todo.id}>
+      <input type="checkbox" checked={todo.completed} onChange={handleToggle} />
+      {todo.task}
+      <button onClick={handleRemove}>削除</button>
     </li>
   );
 }

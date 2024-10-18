@@ -1,8 +1,6 @@
 import './App.css';
-import { Counter } from './Counter';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { TodoList } from './TodoList';
-import { Clock } from './Clock';
 
 export type TodoItemType = {
   id: number;
@@ -11,10 +9,6 @@ export type TodoItemType = {
 };
 
 function App() {
-  const id = 'abc';
-  const random = Math.floor(Math.random() * 2);
-  const flag = !random;
-
   const initialTodoList = [
     { id: 1, task: 'Learning Browser', completed: true },
     { id: 2, task: 'Learning JavaScript/TypeScript', completed: true },
@@ -31,36 +25,11 @@ function App() {
 
   return (
     <>
-      <Clock />
       <ul>
         <TodoList todoList={todoList} />
       </ul>
 
       <h1>これがワイの React やで</h1>
-      <div className="card">
-        <Counter />
-        <Counter />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <div className='card'>
-        <ul>
-          {new Array(1000).fill(0).map((_, i) => (
-            <li key={i}>Item {i}</li>
-          ))}
-        </ul>
-        <div ref={ref}></div>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <div id={id + 'def'}>
-        <div>
-          {flag ? <span>Foo! {random}</span> : <span>Bar! {random}</span>}
-        </div>
-      </div>
     </>
   );
 }

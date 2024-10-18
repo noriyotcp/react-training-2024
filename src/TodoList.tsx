@@ -1,15 +1,16 @@
 // TODO: Refactor this component
 
-import { useReducer } from 'react';
+import { memo, useReducer } from 'react';
 import { TodoItemType } from './App';
 import {
   reducer as todoReducer,
   add,
-  remove,
-  toggleItemState,
   filterByStatus,
 } from './todoReducer';
 import { AddTodoItem } from './AddTodoItem';
+import { TodoItem } from './TodoItem';
+const MemoisedAddTodoItem = memo(AddTodoItem);
+const MemoisedTodoItem = memo(TodoItem);
 
 type Props = {
   todoList: TodoItemType[];
@@ -43,19 +44,11 @@ export function TodoList(props: Props) {
   return (
     <>
       {state.todoList.map((todo) => (
-        <li key={todo.id}>
-          <input
-            type="checkbox"
-            checked={todo.completed}
-            onChange={() => dispatch(toggleItemState(todo.id, !todo.completed))}
-          />
-          {todo.task}
-          <button onClick={() => dispatch(remove(todo.id))}>削除</button>
-        </li>
+        <MemoisedTodoItem key={todo.id} todo={todo} dispatch={dispatch} />
       ))}
 
       {/* Add button and input field */}
-      <AddTodoItem addNewTodo={addNewTodo} />
+      <MemoisedAddTodoItem addNewTodo={addNewTodo} />
 
       <div className="card">
         <select onChange={handleChangeSelect}>

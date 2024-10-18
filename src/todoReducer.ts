@@ -22,7 +22,7 @@ type FilterByStatus = {
   status: 'all' | 'completed' | 'incompleted';
 };
 
-type Action = Add | Remove | ToggleItemState | FilterByStatus;
+export type Action = Add | Remove | ToggleItemState | FilterByStatus;
 
 // Action creators
 export const add = (task: TodoItemType['task']): Add => {

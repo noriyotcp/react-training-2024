@@ -28,6 +28,7 @@ export function AddTodoItem(props: Props) {
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     addTodoItem();
+    handleChange();
   };
 
   return (
