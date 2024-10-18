@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { TodoItemType } from './App';
 
 type Props = {
@@ -7,43 +7,42 @@ type Props = {
 
 export function AddTodoItem(props: Props) {
   const { addNewTodo } = props;
-  const [inputText, setInputText] = useState('');
 
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    if (buttonRef.current !== null) {
-      buttonRef.current.disabled = inputText === '';
-    }
-  }, [inputText]);
-
-  const handleOnSubmit = () => {
+  const addTodoItem = () => {
     if (inputRef.current !== null) {
       addNewTodo(inputRef.current.value);
-      setInputText('');
+      inputRef.current.value = '';
       inputRef.current.focus();
     }
-  };
+  }
 
-  const handleKeyDown = (event: { key: string; shiftKey: unknown }) => {
-    if (event.key === 'Enter' && event.shiftKey) {
-      handleOnSubmit();
+  const handleChange = () => {
+    if (inputRef.current !== null && buttonRef.current !== null) {
+      buttonRef.current.disabled = inputRef.current.value === '';
     }
+  }
+
+  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    addTodoItem();
   };
 
   return (
     <>
-      <input
-        type="text"
-        value={inputText}
-        ref={inputRef}
-        onChange={() => setInputText(inputRef.current?.value ?? '')}
-        onKeyDown={handleKeyDown}
-      ></input>
-      <button ref={buttonRef} onClick={handleOnSubmit}>
-        追加
-      </button>
+      <form onSubmit={handleOnSubmit}>
+        <input
+          type="text"
+          defaultValue=""
+          ref={inputRef}
+          onChange={handleChange}
+        ></input>
+        <button ref={buttonRef} disabled>
+          追加
+        </button>
+      </form>
     </>
   );
 }
