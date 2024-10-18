@@ -1,6 +1,6 @@
 import './App.css';
 import { Counter } from './Counter';
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { TodoList } from './TodoList';
 import { Clock } from './Clock';
 
@@ -23,6 +23,11 @@ function App() {
   ]
 
   const [todoList] = useState(initialTodoList);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    ref.current?.scrollIntoView();
+  }, []);
 
   return (
     <>
@@ -39,6 +44,14 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
+      </div>
+      <div className='card'>
+        <ul>
+          {new Array(1000).fill(0).map((_, i) => (
+            <li key={i}>Item {i}</li>
+          ))}
+        </ul>
+        <div ref={ref}></div>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
