@@ -5,11 +5,10 @@ import { TodoItemType } from './App';
 import {
   reducer as todoReducer,
   add,
-  remove,
-  toggleItemState,
   filterByStatus,
 } from './todoReducer';
 import { AddTodoItem } from './AddTodoItem';
+import { TodoItem } from './TodoItem';
 const MemoisedAddTodoItem = memo(AddTodoItem);
 
 type Props = {
@@ -44,15 +43,7 @@ export function TodoList(props: Props) {
   return (
     <>
       {state.todoList.map((todo) => (
-        <li key={todo.id}>
-          <input
-            type="checkbox"
-            checked={todo.completed}
-            onChange={() => dispatch(toggleItemState(todo.id, !todo.completed))}
-          />
-          {todo.task}
-          <button onClick={() => dispatch(remove(todo.id))}>削除</button>
-        </li>
+        <TodoItem key={todo.id} todo={todo} dispatch={dispatch} />
       ))}
 
       {/* Add button and input field */}
