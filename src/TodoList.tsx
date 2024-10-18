@@ -10,6 +10,7 @@ import {
 import { AddTodoItem } from './AddTodoItem';
 import { TodoItem } from './TodoItem';
 const MemoisedAddTodoItem = memo(AddTodoItem);
+const MemoisedTodoItem = memo(TodoItem);
 
 type Props = {
   todoList: TodoItemType[];
@@ -43,7 +44,7 @@ export function TodoList(props: Props) {
   return (
     <>
       {state.todoList.map((todo) => (
-        <TodoItem key={todo.id} todo={todo} dispatch={dispatch} />
+        <MemoisedTodoItem key={todo.id} todo={todo} dispatch={dispatch} />
       ))}
 
       {/* Add button and input field */}
