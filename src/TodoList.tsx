@@ -1,6 +1,6 @@
 // TODO: Refactor this component
 
-import { useReducer } from 'react';
+import { memo, useReducer } from 'react';
 import { TodoItemType } from './App';
 import {
   reducer as todoReducer,
@@ -10,6 +10,7 @@ import {
   filterByStatus,
 } from './todoReducer';
 import { AddTodoItem } from './AddTodoItem';
+const MemoisedAddTodoItem = memo(AddTodoItem);
 
 type Props = {
   todoList: TodoItemType[];
@@ -55,7 +56,7 @@ export function TodoList(props: Props) {
       ))}
 
       {/* Add button and input field */}
-      <AddTodoItem addNewTodo={addNewTodo} />
+      <MemoisedAddTodoItem addNewTodo={addNewTodo} />
 
       <div className="card">
         <select onChange={handleChangeSelect}>
