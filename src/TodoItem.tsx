@@ -17,7 +17,7 @@ export function TodoItem({ todo, dispatch }: Props) {
   };
 
   return (
-    <li key={todo.id}>
+    <li>
       <input type="checkbox" checked={todo.completed} onChange={handleToggle} />
       {todo.task}
       <button onClick={handleRemove}>削除</button>
