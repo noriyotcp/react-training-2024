@@ -1,12 +1,6 @@
-// TODO: Refactor this component
-
-import { memo, useReducer } from 'react';
+import { memo, useCallback, useReducer, useMemo } from 'react';
 import { TodoItemType } from './App';
-import {
-  reducer as todoReducer,
-  add,
-  filterByStatus,
-} from './todoReducer';
+import { reducer as todoReducer, add, filterByStatus } from './todoReducer';
 import { AddTodoItem } from './AddTodoItem';
 import { TodoItem } from './TodoItem';
 const MemoisedAddTodoItem = memo(AddTodoItem);
@@ -23,23 +17,32 @@ export function TodoList(props: Props) {
     initialTodoList: todoList,
   });
 
-  const optionsOnSelect = [
-    { label: '全て', value: 'all' },
-    { label: '完了', value: 'completed' },
-    { label: '未完了', value: 'incompleted' },
-  ];
+  const optionsOnSelect = useMemo(
+    () => [
+      { label: '全て', value: 'all' },
+      { label: '完了', value: 'completed' },
+      { label: '未完了', value: 'incompleted' },
+    ],
+    []
+  );
 
-  const handleChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(
-      filterByStatus(
-        event.currentTarget.value as 'all' | 'completed' | 'incompleted'
-      )
-    );
-  };
+  const handleChangeSelect = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      dispatch(
+        filterByStatus(
+          event.currentTarget.value as 'all' | 'completed' | 'incompleted'
+        )
+      );
+    },
+    [dispatch]
+  );
 
-  const addNewTodo = (inputText: string) => {
-    dispatch(add(inputText));
-  };
+  const addNewTodo = useCallback(
+    (inputText: string) => {
+      dispatch(add(inputText));
+    },
+    [dispatch]
+  );
 
   return (
     <>
