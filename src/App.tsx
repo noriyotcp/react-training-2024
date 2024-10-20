@@ -1,7 +1,6 @@
 import './App.css';
-import { useLayoutEffect, useRef, useState } from 'react';
 import { TodoList } from './TodoList';
-import { randomId } from './generateKey';
+import { useInitialTodoList } from './useInitialTodoList';
 
 export type TodoItemType = {
   id: string;
@@ -10,23 +9,7 @@ export type TodoItemType = {
 };
 
 function App() {
-  const initialTodoList = [
-    { id: randomId(16), task: 'Learning Browser', completed: true },
-    {
-      id: randomId(16),
-      task: 'Learning JavaScript/TypeScript',
-      completed: true,
-    },
-    { id: randomId(16), task: 'Learning React', completed: false },
-    { id: randomId(16), task: 'Learning Next.js', completed: false },
-  ];
-
-  const [todoList] = useState(initialTodoList);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    ref.current?.scrollIntoView();
-  }, []);
+  const {todoList, ref} = useInitialTodoList();
 
   return (
     <>
@@ -34,7 +17,7 @@ function App() {
         <TodoList todoList={todoList} />
       </ul>
 
-      <h1>これがワイの React やで</h1>
+      <h1 ref={ref}>これがワイの React やで</h1>
     </>
   );
 }
