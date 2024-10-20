@@ -1,5 +1,5 @@
 // src/useTodoList.ts
-import { useState, useLayoutEffect, useRef } from 'react';
+import { useState } from 'react';
 import { randomId } from './generateKey';
 import { TodoItemType } from './App';
 
@@ -61,17 +61,6 @@ export function useInitialTodoList() {
   });
 
   const [todoList] = useState(initialTodoList);
-  const ref = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    if (ref.current) {
-      const { top } = ref.current.getBoundingClientRect();
-      window.scrollTo({
-        top: window.scrollY + top,
-        behavior: 'smooth',
-      });
-    }
-  }, []);
-
-  return { todoList, ref };
+  return { todoList };
 }
