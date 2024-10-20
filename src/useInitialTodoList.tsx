@@ -19,7 +19,13 @@ export function useInitialTodoList() {
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    ref.current?.scrollIntoView();
+    if (ref.current) {
+      const { top } = ref.current.getBoundingClientRect();
+      window.scrollTo({
+        top: window.scrollY + top,
+        behavior: 'smooth',
+      });
+    }
   }, []);
 
   return { todoList, ref };
