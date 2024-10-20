@@ -1,4 +1,5 @@
 import { TodoItemType } from './App';
+import { randomId } from './generateKey';
 
 // Action types
 type Add = {
@@ -53,7 +54,7 @@ export const reducer = (
         todoList: [
           ...state.todoList,
           {
-            id: state.todoList.length + 1,
+            id: randomId(16),
             task: action.task,
             completed: false,
           },
@@ -61,7 +62,7 @@ export const reducer = (
         initialTodoList: [
           ...state.initialTodoList,
           {
-            id: state.initialTodoList.length + 1,
+            id: randomId(16),
             task: action.task,
             completed: false,
           },

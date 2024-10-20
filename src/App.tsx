@@ -1,20 +1,25 @@
 import './App.css';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { TodoList } from './TodoList';
+import { randomId } from './generateKey';
 
 export type TodoItemType = {
-  id: number;
+  id: string;
   task: string;
   completed: boolean;
 };
 
 function App() {
   const initialTodoList = [
-    { id: 1, task: 'Learning Browser', completed: true },
-    { id: 2, task: 'Learning JavaScript/TypeScript', completed: true },
-    { id: 3, task: 'Learning React', completed: false },
-    { id: 4, task: 'Learning Next.js', completed: false },
-  ]
+    { id: randomId(16), task: 'Learning Browser', completed: true },
+    {
+      id: randomId(16),
+      task: 'Learning JavaScript/TypeScript',
+      completed: true,
+    },
+    { id: randomId(16), task: 'Learning React', completed: false },
+    { id: randomId(16), task: 'Learning Next.js', completed: false },
+  ];
 
   const [todoList] = useState(initialTodoList);
   const ref = useRef<HTMLDivElement>(null);

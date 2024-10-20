@@ -3,7 +3,6 @@ import { TodoItemType } from './App';
 import { reducer as todoReducer, add, filterByStatus } from './todoReducer';
 import { AddTodoItem } from './AddTodoItem';
 import { TodoItem } from './TodoItem';
-import { randomId } from './generateKey';
 const MemoisedAddTodoItem = memo(AddTodoItem);
 const MemoisedTodoItem = memo(TodoItem);
 
@@ -48,7 +47,7 @@ export function TodoList(props: Props) {
   return (
     <>
       {state.todoList.map((todo) => (
-        <MemoisedTodoItem key={randomId(16)} todo={todo} dispatch={dispatch} />
+        <MemoisedTodoItem key={todo.id} todo={todo} dispatch={dispatch} />
       ))}
 
       {/* Add button and input field */}
