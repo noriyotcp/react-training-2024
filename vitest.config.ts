@@ -1,7 +1,7 @@
-{
-  "testFilePatterns": ["src/**/*.test.tsx"],
-  "testRunnerOptions": {
-    "reporter": "spec",
-    "timeout": 5000
+export default {
+  testFilePatterns: ['src/**/*.test.tsx'],
+  testRunnerOptions: {
+    reporter: 'spec',
+    timeout: 5000
   }
-}
+};
